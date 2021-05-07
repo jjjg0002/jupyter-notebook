@@ -1,0 +1,44 @@
+import matplotlib.pyplot as plt
+%matplotlib inline
+from IPython.html.widgets import interact
+from scipy import signal
+
+def prueba(w,a,k): #ejemplo de variacion del coeficiente de amortiguamiento.
+    #a = delta
+    #k =ganancia  
+    #w= frecuencia
+    #b=delta*w =cte
+    sys_car = signal.lti([k*w**2], [1,2*a*w, w**2])# funcion de trasferencia de segundo orden
+    
+
+    t, y = signal.step2(sys_car) # Respuesta a escalón unitario
+    plt.plot(t, y,linewidth=2,color='red') # Equivalente a una entrada de altura 2250
+    plt.xlabel('tiempo')
+    plt.ylabel('Y(t)')
+    plt.title(u'sistema dinamico coef. amort. variante')
+    plt.xlim(0,20)
+    plt.ylim(0,10)
+    
+    plt.grid(True)
+    plt.show()
+def prueba1(w,b,k): #ejemplo de  b=cte
+    #a = delta
+    #k =ganancia  
+    #w= frecuencia
+    #b=delta*w =cte
+    sys_car = signal.lti([k*w**2], [1,2*b, w**2])# funcion de trasferencia de segundo orden
+    
+
+    t, y = signal.step2(sys_car) # Respuesta a escalón unitario
+    plt.plot(t, y,linewidth=2,color='red') # Equivalente a una entrada de altura 2250
+    plt.xlabel('tiempo')
+    plt.ylabel('Y(t)')
+    plt.title(u'sistema dinamico con delta*freq constante')
+    plt.xlim(0,10)
+    plt.ylim(0,10)
+    
+    plt.grid(True)
+    plt.show()
+    #interact(prueba,w=(0.1,5),a=(0.1,5),k=(0.1,5))
+interact(prueba,w=(0.1,5),a=(0.1,5),k=(0.1,5))
+interact(prueba1,w=(0.1,5),b=(0.1,5),k=(0.1,5))
